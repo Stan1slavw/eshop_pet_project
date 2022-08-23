@@ -1,60 +1,45 @@
 package com.example.eshop.controllers;
 
-
+import com.example.eshop.controllers.services.ProductService;
 import com.example.eshop.entity.Product;
-import com.example.eshop.entity.User;
-import com.example.eshop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
-import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class ProductController {
+
     @Autowired
     private ProductService productService;
 
     @GetMapping("/")
-    public String products(@ModelAttribute("searchWord") String title, @ModelAttribute("searchCity") String city, Principal principal, Model model) {
-        model.addAttribute("products", productService.findAllByTitleStartsWithAndCity(title, city));
-        model.addAttribute("user", productService.getUserByPrincipal(principal));
-        model.addAttribute("searchWord", title);
-        model.addAttribute("searchCity", city);
-        return "products";
-    }
-
-    @GetMapping("/product/{id}")
-    public String productInfo(@PathVariable Long id, Model model, Principal principal) {
-        Product product = productService.getProductById(id);
-        model.addAttribute("user", productService.getUserByPrincipal(principal));
-        model.addAttribute("product", product);
-        model.addAttribute("images", product.getImages());
-        model.addAttribute("authorProduct", product.getUser());
-        return "product-info";
+    public String allProducts(Model model){
+        List<Product> productList = productService.allProducts();
+        model.addAttribute("products", productList);
+        return "product";
     }
 
     @PostMapping("/product/create")
-    public String createProduct(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2,
-                                @RequestParam("file3") MultipartFile file3, Product product, Principal principal) throws IOException {
-        productService.saveProduct(principal, product, file1, file2, file3);
+    public String createProduct(Product product){
+        productService.saveProduct(product);
         return "redirect:/";
     }
 
-    @PostMapping("/product/delete/{id}")
-    public String deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
-        return "redirect:/my/products";
+    @GetMapping("/product/{id}")
+    public String productInfo(@PathVariable Long id, Model model){
+            model.addAttribute("product", productService.getProductById(id));
+        return "product-info";
     }
 
-    @GetMapping("/my/products")
-    public String userProducts(Principal principal, Model model) {
-        User user = productService.getUserByPrincipal(principal);
-        model.addAttribute("user", user);
-        model.addAttribute("products", user.getProducts());
-        return "my-products";
+    @PostMapping("/product/delete/{id}")
+    public String deleteProduct(@PathVariable Long id){
+        productService.deleteProduct(id);
+        return "redirect:/";
     }
 }
