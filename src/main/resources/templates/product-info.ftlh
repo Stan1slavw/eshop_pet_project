@@ -12,6 +12,10 @@
 <center><h1>Product №${product.id}</h1></center>
 <br><br>
 <h3>Сведения о товаре</h3>
+<#list images as img>
+	<img src="/images/${img.id}" height="60px"/><br><br>
+</#list>
+
 <b>Название товара: ${product.title}</b><br>
 <b>Полное описание товара: ${product.description}</b><br>
 <b>Цена товара: ${product.price}</b><br>
@@ -19,7 +23,6 @@
 <b>Город отправителя: ${product.city}</b><br>
 
 <br><br>
-<h4>Удалить товар</h4>
 <form action="/product/delete/${product.id}" method="post">
 	<input type="submit" value="Удалить товар">
 </form>
