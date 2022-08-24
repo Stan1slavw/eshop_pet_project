@@ -9,9 +9,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "images")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Images {
+@NoArgsConstructor
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -28,7 +28,6 @@ public class Images {
     private boolean isPreviewImage;
     @Lob
     private byte[] bytes;
-
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Product product;
 }

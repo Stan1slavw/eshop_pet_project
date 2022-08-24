@@ -1,7 +1,8 @@
 package com.example.eshop.controllers;
 
-import com.example.eshop.entity.Images;
-import com.example.eshop.repositories.ImagesRepository;
+
+import com.example.eshop.entity.Image;
+import com.example.eshop.repositories.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
@@ -15,12 +16,13 @@ import java.io.ByteArrayInputStream;
 @RestController
 public class ImageController {
     @Autowired
-    private ImagesRepository imagesRepository;
+    private  ImageRepository imageRepository;
 
     @GetMapping("/images/{id}")
-    private ResponseEntity<?> getImageById(@PathVariable Long id){
-        Images image = imagesRepository.findById(id).orElse(null);
-        return ResponseEntity.ok().header("fileName", image.getOriginalFileName())
+    private ResponseEntity<?> getImageById(@PathVariable Long id) {
+        Image image = imageRepository.findById(id).orElse(null);
+        return ResponseEntity.ok()
+                .header("fileName", image.getOriginalFileName())
                 .contentType(MediaType.valueOf(image.getContentType()))
                 .contentLength(image.getSize())
                 .body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));

@@ -9,7 +9,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "products")
+@Entity
+@Table(name = "products")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,20 +27,22 @@ public class Product {
     private int price;
     @Column(name = "city")
     private String city;
-    @Column(name = "author")
-    private String author;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
-    private List<Images> images = new ArrayList<>();
-
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+    mappedBy = "product")
+    private List<Image> images = new ArrayList<>();
     private Long previewImageId;
-    private LocalDateTime dateOfCreate;
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn
+    private User user;
+    private LocalDateTime dateOfCreated;
 
     @PrePersist
-    private void init(){
-        dateOfCreate = LocalDateTime.now();
+    private void init() {
+        dateOfCreated = LocalDateTime.now();
     }
 
-    public void addImageToProduct(Images image){
+
+    public void addImageToProduct(Image image) {
         image.setProduct(this);
         images.add(image);
     }
