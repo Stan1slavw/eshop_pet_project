@@ -1,105 +1,46 @@
-<#import "blocks/template.ftlh" as t>
-<@t.template user>
-	<div class="bgcolor">
-		<h1 style="text-align: center">Поиск товаров</h1>
-		<hr>
-		<a class="custom-btn2 btn-2" style="text-align: center; width: 100%"
-		   data-toggle="collapse" href="#collapseExample" role="button"
-		   aria-expanded="true" aria-controls="collapseExample">
-			Поиск по товарам
-		</a>
-
-		<div class="collapse mb-3" id="collapseExample" style="">
-			<form method="get" action="/">
-				<div class="form-row">
-					<div class="form-group col-md-2">
-						<label for="searchCity"><b>Город</b></label>
-						<select id="searchCity" name="searchCity" class="form-control">
-							<option value="">${searchCity} </option>
-							<option value="">Любой</option>
-							<option value="Киев">Киев</option>
-							<option value="Харьков">Харьков</option>
-							<option value="Львов">Львов</option>
-						</select>
-
-						<br>
-
-						<label for="searchCategory"><b>Категория</b></label>
-						<select id="searchCategory" name="searchCategory" class="form-control">
-							<option value="">${searchCategory} </option>
-							<option value="">Любой</option>
-							<option value="Компьютерная Техника">Компьютерная техника</option>
-							<option value="Аксессуары">Аксессуары</option>
-							<option value="Телефоны">Телефоны</option>
-						</select>
-
-						<br>
-
-						<label for="searchPrice"><b>Максимальная сумма товара</b></label>
-						<select id="searchPrice" name="searchPrice" class="form-control">
-							<option value="">${searchPrice}</option>
-							<option value="">Любой</option>
-							<option value="1000">1000</option>
-							<option value="5000">5000</option>
-							<option value="15000">15000</option>
-							<option value="20000">20000</option>
-							<option value="50000">50000</option>
-						</select>
-
-
-<#--						<label for="searchPrice">Цена2.0</label>-->
-<#--						<div>-->
-<#--							<p><input type="range" min="0" max="50000" onchange="document.getElementById('rangeValue').innerHTML = this.value;" list="rangeList"> <span id="rangeValue">0</span></p>-->
-<#--							<datalist id="searchPrice">-->
-<#--								<option value="">${searchPrice}</option>-->
-<#--								<option value="0" label="0">-->
-<#--								<option value="2000" label="2000">-->
-<#--								<option value="6000" label="6000">-->
-<#--								<option value="10000" label="10000">-->
-<#--								<option value="15000" label="15000">-->
-<#--								<option value="25000" label="25000">-->
-<#--								<option value="30000" label="30000">-->
-<#--								<option value="35000" label="35000">-->
-<#--								<option value="40000" label="40000">-->
-<#--								<option value="45000" label="45000">-->
-<#--								<option value="50000>" label="50000">-->
-<#--							</datalist>-->
-<#--						</div>-->
-
-
-					</div>
-
-					<div class="form-group mx-sm-3 mb-3">
-						<label for="searchWord"><b>Поиск по объявлениям</b></label>
-						<input type="text" name="searchWord" <#if searchWord??>value="${searchWord}"</#if>
-						       class="form-control" id="searchWord">
-						<button class="custom-btn2 btn-2">Поиск</button>
-                        <#--					<button style="width: 30%" type="submit" class="btn btn-dark">Поиск</button>-->
-					</div>
-				</div>
-			</form>
-		</div>
-		<hr>
-		<div class="card-columns">
-            <#list products as product>
-				<a href="/product/${product.id}" class="product-link">
-					<div class="card text-white bg-primary my-3 product" style="width: 18rem;">
-
-						<img src="/images/${product.previewImageId}"
-						     class="card-img-top">
-						<div class="card-body">
-							<h5 class="card-title">${product.title}</h5>
-							<p class="card-text">${product.price} ₴</p>
-							<p>${product.category}</p>
-						</div>
-						<div class="card-footer">
-                            ${product.city}
-						</div>
-					</div>
-				</a>
-            <#else>
-				<h1 style="text-align: center">Не найдено</h1>
-            </#list>
-		</div>
-	</div>
-</@t.template>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ESHOP</title>
+</head>
+<body>
+<h1>ESHOP</h1><hr>
+<#if user.email??>
+    <h3>Имя пользователя: <i>${user.name}</i></h3>
+    <form action="/logout" method="post">
+        <input type="hidden" name="_csrf" value="${_csrf.token}">
+        <input type="submit" value="Выйти"/>
+    </form>
+<#else>
+    <a href="/login">Войти</a></h1>
+</#if>
+<hr>
+<h4>Все товары</h4>
+<form action="/" method="get">
+    Поиск по названию объявления: <input type="text" name="title">
+    <input type="submit" value="Поиск"/>
+</form>
+<#list products as product>
+    <div>
+        <p><b>${product.title}</b> ${product.price} руб. | <a href="/product/${product.id}">Подробнее...</a></p>
+    </div>
+<#else>
+    <h3>Товаров нет</h3>
+</#list>
+<#if user.email??>
+    <hr>
+    <h3>Создать новый товар</h3>
+    <form action="/product/create" method="post" enctype="multipart/form-data">
+        Название объявления: <input type="text" name="title"/><br><br>
+        Описание объявления: <input type="text" name="description"/><br><br>
+        Цена: <input type="number" name="price"/><br><br>
+        Город: <input type="text" name="city"/><br><br>
+        Первая фотография: <input type="file" name="file1"/><br><br>
+        Вторая фотография: <input type="file" name="file2"/><br><br>
+        Третья фотография: <input type="file" name="file3"/><br><br>
+        <input type="hidden" name="_csrf" value="${_csrf.token}">
+        <input type="submit" value="Добавить товар"/>
+    </form>
+</#if>
+</body>
+</html>
