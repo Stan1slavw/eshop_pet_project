@@ -12,7 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -22,10 +24,22 @@ public class ProductService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<Product> listProducts(String title) {
-        if (title != null) return productRepository.findByTitle(title);
-        return productRepository.findAll();
+
+    public List<Product> findAllByTitleStartsWith(String title) {
+        List<Product> allProducts = productRepository.findAll();
+        List<Product> allProductsStartsWith = new ArrayList<>();
+        if (title==null){
+            return allProducts;
+        }
+        for (Product product: allProducts){
+            if (product.getTitle().startsWith(title)){
+                allProductsStartsWith.add(product);
+            }
+        }
+        return allProductsStartsWith;
     }
+
+
 
     public void saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
         product.setUser(getUserByPrincipal(principal));
