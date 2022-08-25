@@ -23,6 +23,7 @@ public class ProductController {
         model.addAttribute("products", productService.findAllByTitleStartsWithAndCity(title, city));
         model.addAttribute("user", productService.getUserByPrincipal(principal));
         model.addAttribute("searchWord", title);
+        model.addAttribute("searchCity", city);
         return "products";
     }
 

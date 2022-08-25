@@ -33,18 +33,29 @@ public class ProductService {
             return allProducts;
         }
         for (Product product: allProducts){
-            if (product.getTitle().startsWith(title)){
+            if (product.getTitle().toLowerCase().startsWith(title.toLowerCase())){
                 allProductsStartsWith.add(product);
             }
         }
         return allProductsStartsWith;
     }
 
+    List<Product> findAllByTitleStartingWithAndCity(String title, String city){
+        List<Product> allProducts = productRepository.findAll();
+        List<Product> allProductsStartsWithAndCity = new ArrayList<>();
+        for (Product product: allProducts){
+            if (product.getTitle().toLowerCase().startsWith(title.toLowerCase())&& product  .getCity().equals(city)){
+                allProductsStartsWithAndCity.add(product);
+            }
+        }
+        return allProductsStartsWithAndCity;
+    }
+
     public List<Product> findAllByTitleStartsWithAndCity(String title, String city) {
         if (Objects.equals(city, "")){
             return findAllByTitleStartsWith(title);
         }
-       List<Product> productsByTitleStartWithAndCity = productRepository.findAllByTitleAndCity(title, city);
+       List<Product> productsByTitleStartWithAndCity = findAllByTitleStartingWithAndCity(title, city);
        return productsByTitleStartWithAndCity;
     }
 
