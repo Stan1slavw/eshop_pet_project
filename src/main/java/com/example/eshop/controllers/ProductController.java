@@ -19,8 +19,8 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/")
-    public String products(@ModelAttribute("searchWord") String title,@ModelAttribute("searchCity") String city, Principal principal, Model model) {
-        model.addAttribute("products", productService.findAllByTitleStartsWith(title));
+    public String products(@ModelAttribute("searchWord") String title, @ModelAttribute("searchCity") String city, Principal principal, Model model) {
+        model.addAttribute("products", productService.findAllByTitleStartsWithAndCity(title, city));
         model.addAttribute("user", productService.getUserByPrincipal(principal));
         model.addAttribute("searchWord", title);
         return "products";
@@ -44,8 +44,8 @@ public class ProductController {
     }
 
     @PostMapping("/product/delete/{id}")
-    public String deleteProduct(@PathVariable Long id, Principal principal) {
-        productService.deleteProduct(productService.getUserByPrincipal(principal), id);
+    public String deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
         return "redirect:/my/products";
     }
 
