@@ -1,6 +1,6 @@
 package com.example.mpps.entity;
 
-import com.example.eshop.entity.enums.Role;
+import com.example.mpps.entity.enums.Role;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
