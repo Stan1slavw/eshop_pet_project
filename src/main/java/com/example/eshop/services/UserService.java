@@ -76,3 +76,4 @@ public class UserService {
         return userRepository.findByEmail(principal.getName());
     }
 }
+

@@ -49,6 +49,7 @@ public class User implements UserDetails {
         return roles.contains(Role.ROLE_ADMIN);
     }
 
+
     // security
 
     @Override
