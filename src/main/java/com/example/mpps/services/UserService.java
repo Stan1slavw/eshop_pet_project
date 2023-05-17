@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-    //Добавить конфигурацию шифровки
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public boolean createUser(User user) {
         String email = user.getEmail();
