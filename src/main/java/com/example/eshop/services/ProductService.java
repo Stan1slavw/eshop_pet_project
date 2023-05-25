@@ -12,7 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -22,10 +25,53 @@ public class ProductService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<Product> listProducts(String title) {
-        if (title != null) return productRepository.findByTitle(title);
-        return productRepository.findAll();
+
+    public List<Product> findAllByTitleStartsWith(String title) {
+        List<Product> allProducts = productRepository.findAll();
+        List<Product> allProductsStartsWith = new ArrayList<>();
+        if (title==null){
+            return allProducts;
+        }
+        for (Product product: allProducts){
+            if (product.getTitle().toLowerCase().startsWith(title.toLowerCase())){
+                allProductsStartsWith.add(product);
+            }
+        }
+        return allProductsStartsWith;
     }
+
+    List<Product> findAllByTitleStartingWithAndCity(String title, String city){
+        List<Product> allProducts = productRepository.findAll();
+        List<Product> allProductsStartsWithAndCity = new ArrayList<>();
+        for (Product product: allProducts){
+            if (product.getTitle().toLowerCase().startsWith(title.toLowerCase())&& product  .getCity().equals(city)){
+                allProductsStartsWithAndCity.add(product);
+            }
+        }
+        return allProductsStartsWithAndCity;
+    }
+
+//    public List<Product> findAllByTitleStartsWithAndCity(String title, String city) {
+//        if (Objects.equals(city, "")){
+//            return findAllByTitleStartsWith(title);
+//        }
+//       List<Product> productsByTitleStartWithAndCity = findAllByTitleStartingWithAndCity(title, city);
+//       return productsByTitleStartWithAndCity;
+//    }
+
+    public List<Product> findAllByTitleStartsWithAndCity(String title, String city) {
+        if (Objects.equals(city, "")){
+            return findAllByTitleStartsWith(title);
+        }
+        List<Product> productsByTitleStartWithAndCity = findAllByTitleStartingWithAndCity(title, city);
+        return productsByTitleStartWithAndCity;
+    }
+
+    public User getUserByPrincipal(Principal principal) {
+        if (principal == null) return new User();
+        return userRepository.findByEmail(principal.getName());
+    }
+
 
     public void saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
         product.setUser(getUserByPrincipal(principal));
@@ -51,10 +97,6 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public User getUserByPrincipal(Principal principal) {
-        if (principal == null) return new User();
-        return userRepository.findByEmail(principal.getName());
-    }
 
     private Image toImageEntity(MultipartFile file) throws IOException {
         Image image = new Image();
@@ -66,18 +108,11 @@ public class ProductService {
         return image;
     }
 
-    public void deleteProduct(User user, Long id) {
+    public void deleteProduct(Long id) {
         Product product = productRepository.findById(id)
                 .orElse(null);
         if (product != null) {
-            if (product.getUser().getId().equals(user.getId())) {
-                productRepository.delete(product);
-                log.info("Product with id = {} was deleted", id);
-            } else {
-                log.error("User: {} haven't this product with id = {}", user.getEmail(), id);
-            }
-        } else {
-            log.error("Product with id = {} is not found", id);
+            productRepository.delete(product);
         }
     }
 
