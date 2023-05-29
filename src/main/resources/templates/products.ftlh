@@ -6,7 +6,7 @@
 		   data-toggle="collapse" href="#collapseExample" role="button"
 		   aria-expanded="true" aria-controls="collapseExample">
 		<img class="lupa" src="/static/images/lupa.png"></a> <h1 style="text-align: center">Объявления</h1>
-
+		<a class="custom-btn2 btn-2" style="text-align: center; height: 60px; width: 100px" href="/orderByDateAsc">Самые старые</a> <a class="custom-btn2 btn-2" style="text-align: center; height: 60px; width: 100px" href="/orderByDateDesc">Самые новые</a>
 		<div class="collapse mb-3" id="collapseExample" style="">
 			<form method="get" action="/">
 				<div class="form-row">

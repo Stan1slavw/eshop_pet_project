@@ -35,6 +35,33 @@ public class ProductController {
         return "products";
     }
 
+    @GetMapping("/orderByDateAsc")
+    public String productsWithDateAsc(@ModelAttribute("searchWord") String title, @ModelAttribute("searchCity") String city,
+                                   @ModelAttribute("searchCategory") String category, @ModelAttribute("searchPrice") String price,
+                                   Principal principal, Model model){
+        model.addAttribute("searchWord", title);
+        model.addAttribute("searchCity", city);
+        model.addAttribute("searchCategory", category);
+        model.addAttribute("searchPrice", price);
+        model.addAttribute("products", productService.sortProductsByDateAsc());
+        model.addAttribute("user", productService.getUserByPrincipal(principal));
+        return "products";
+    }
+
+    @GetMapping("/orderByDateDesc")
+    public String productsWithDateDesc(@ModelAttribute("searchWord") String title, @ModelAttribute("searchCity") String city,
+                                   @ModelAttribute("searchCategory") String category, @ModelAttribute("searchPrice") String price,
+                                   Principal principal, Model model){
+        model.addAttribute("searchWord", title);
+        model.addAttribute("searchCity", city);
+        model.addAttribute("searchCategory", category);
+        model.addAttribute("searchPrice", price);
+        model.addAttribute("products", productService.sortProductsByDateDesc());
+        model.addAttribute("user", productService.getUserByPrincipal(principal));
+        return "products";
+    }
+
+
     @GetMapping("/product/{id}")
     public String productInfo(@PathVariable Long id, Model model, Principal principal) {
         Product product = productService.getProductById(id);

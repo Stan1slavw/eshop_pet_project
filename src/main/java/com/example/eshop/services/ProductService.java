@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -334,6 +335,14 @@ public class ProductService {
         Product productFromDb = productRepository.save(product);
         productFromDb.setPreviewImageId(productFromDb.getImages().get(0).getId());
         productRepository.save(product);
+    }
+
+    public List<Product> sortProductsByDateDesc(){
+        return productRepository.findAllByOrderByDateOfCreatedDesc();
+    }
+
+    public List<Product> sortProductsByDateAsc(){
+        return productRepository.findAllByOrderByDateOfCreatedAsc();
     }
 
 
