@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,11 @@ public class Product {
     @Column(name = "description", columnDefinition = "text")
     private String description;
     @Column(name = "price")
-    private int price;
+    private String price;
     @Column(name = "city")
     private String city;
+    @Column(name = "category")
+    private String category;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
     mappedBy = "product")
     private List<Image> images = new ArrayList<>();
@@ -34,11 +37,11 @@ public class Product {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn
     private User user;
-    private LocalDateTime dateOfCreated;
+    private LocalDate dateOfCreated;
 
     @PrePersist
     private void init() {
-        dateOfCreated = LocalDateTime.now();
+        dateOfCreated = LocalDate.now();
     }
 
 

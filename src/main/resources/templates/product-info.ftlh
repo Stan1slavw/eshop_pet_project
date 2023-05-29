@@ -9,7 +9,7 @@
         <div class="carousel-inner">
             <#list images as image>
                 <div class="carousel-item <#if image.previewImage>active</#if>">
-                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
+                    <svg class="bd-placeholder-img" width="100%" height="500" xmlns="http://www.w3.org/2000/svg"
                          role="img" aria-label=" :  " preserveAspectRatio="xMidYMid slice" focusable="false">
                         <title></title>
                         <rect width="100%" height="100%" fill="#777"></rect>
@@ -19,7 +19,7 @@
                     <div class="container">
                         <div class="carousel-caption">
                             <a href="/images/${image.id}">
-                                <img class="product" style="height: 100px" src="/images/${image.id}">
+                                <img class="product" style="height: 350px" src="/images/${image.id}">
                             </a>
                         </div>
                     </div>
@@ -39,6 +39,7 @@
     <hr>
     <p><h1 style="text-align: center">${product.title} | ${product.price} ₴</h1></p>
     <p style="text-align: center">${product.description}</p>
+    <p style="text-align: center">${product.category}</p>
     <p style="text-align: center">Номер телефона продавца: <b>${authorProduct.phoneNumber}</b></p>
 
     <hr>
@@ -47,5 +48,27 @@
             <img src="/static/images/avatar.png" alt="mdo" width="32" height="32" class="rounded-circle"> ${authorProduct.name}
         </a>
     </p>
+
+<#--    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">-->
+<#--        <div class="carousel-inner">-->
+<#--            <div class="carousel-item active">-->
+<#--                <img class="d-block w-100" src="..." alt="First slide">-->
+<#--            </div>-->
+<#--            <div class="carousel-item">-->
+<#--                <img class="d-block w-100" src="..." alt="Second slide">-->
+<#--            </div>-->
+<#--            <div class="carousel-item">-->
+<#--                <img class="d-block w-100" src="..." alt="Third slide">-->
+<#--            </div>-->
+<#--        </div>-->
+<#--        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">-->
+<#--            <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<#--            <span class="sr-only">Previous</span>-->
+<#--        </a>-->
+<#--        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">-->
+<#--            <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<#--            <span class="sr-only">Next</span>-->
+<#--        </a>-->
+<#--    </div>-->
 
 </@t.template>

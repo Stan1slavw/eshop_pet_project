@@ -3,6 +3,7 @@ package com.example.eshop.controllers;
 
 import com.example.eshop.entity.Product;
 import com.example.eshop.entity.User;
+import com.example.eshop.repositories.ProductRepository;
 import com.example.eshop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,13 +18,20 @@ import java.security.Principal;
 public class ProductController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ProductRepository productRepository;
 
     @GetMapping("/")
-    public String products(@ModelAttribute("searchWord") String title, @ModelAttribute("searchCity") String city, Principal principal, Model model) {
-        model.addAttribute("products", productService.findAllByTitleStartsWithAndCity(title, city));
+//    public String products(@ModelAttribute("searchWord") String title, @ModelAttribute("searchCity") String city, Principal principal, Model model) {
+    public String products(@ModelAttribute("searchWord") String title, @ModelAttribute("searchCity") String city,
+                           @ModelAttribute("searchCategory") String category, @ModelAttribute("searchPrice") String price, Principal principal, Model model) {
+//        model.addAttribute("products", productService.findAllByTitleStartsWithAndCity(title, city));
+        model.addAttribute("products", productService.findAllByTitleStartsWithAndCityAndCategoryAndPrice(title, city, category, price));
         model.addAttribute("user", productService.getUserByPrincipal(principal));
         model.addAttribute("searchWord", title);
         model.addAttribute("searchCity", city);
+        model.addAttribute("searchCategory", category);
+        model.addAttribute("searchPrice", price);
         return "products";
     }
 

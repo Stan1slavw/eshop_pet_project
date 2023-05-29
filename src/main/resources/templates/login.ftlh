@@ -18,8 +18,8 @@
             </div>
         </div>
         <input type="hidden" name="_csrf" value="${_csrf.token}">
-        <button type="submit" style="width: 100%" class="btn btn-dark">Войти</button>
+        <button type="submit" style="width: 100%" class="custom-btn2 btn-2">Войти</button>
     </form>
     <hr>
-    <h2>Нет аккаунта BUYSELL? <a href="/registration">Зарегистрируйся!</a></h2>
+    <h3>Нет аккаунта Eshop? <a href="/registration">Зарегистрируйся!</a></h3>
 </@t.template>

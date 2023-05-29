@@ -20,7 +20,7 @@
             <input type="password" class="form-control" id="password" required name="password">
         </div>
         <input type="hidden" name="_csrf" value="${_csrf.token}">
-        <button type="submit" style="width: 100%" class="btn btn-dark">Зарегистрироваться</button>
+        <button type="submit" style="width: 100%" class="custom-btn2 btn-2">Зарегистрироваться</button>
     </form>
     <#if errorMessage??>
         <h2 style="color: red">${errorMessage}</h2>
