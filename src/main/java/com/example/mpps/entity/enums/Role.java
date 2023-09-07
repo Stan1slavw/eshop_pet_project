@@ -1,10 +1,9 @@
-package com.example.eshop.entity.enums;
+package com.example.mpps.entity.enums;
 
 import org.springframework.security.core.GrantedAuthority;
 
 public enum Role implements GrantedAuthority {
     ROLE_USER, ROLE_ADMIN;
-
 
     @Override
     public String getAuthority() {

@@ -1,7 +1,6 @@
-package com.example.eshop.services;
+package com.example.mpps.services;
 
-import com.example.eshop.repositories.UserRepository;
-import lombok.RequiredArgsConstructor;
+import com.example.mpps.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,4 +17,3 @@ public class CustomUserDetailsService implements UserDetailsService {
         return userRepository.findByEmail(email);
     }
 }
-

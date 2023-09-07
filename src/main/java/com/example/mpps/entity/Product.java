@@ -1,16 +1,13 @@
-package com.example.eshop.entity;
+package com.example.mpps.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-//
 
 @Entity
 @Table(name = "products")
@@ -39,11 +36,11 @@ public class Product {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn
     private User user;
-    private LocalDate dateOfCreated;
+    private LocalDateTime dateOfCreated;
 
     @PrePersist
     private void init() {
-        dateOfCreated = LocalDate.now();
+        dateOfCreated = LocalDateTime.now();
     }
 
 

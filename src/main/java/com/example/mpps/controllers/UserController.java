@@ -1,8 +1,7 @@
-package com.example.eshop.controllers;
+package com.example.mpps.controllers;
 
-import com.example.eshop.entity.User;
-import com.example.eshop.services.UserService;
-import com.sun.xml.bind.v2.util.StackRecorder;
+import com.example.mpps.entity.User;
+import com.example.mpps.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,19 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
 import java.security.Principal;
 
 @Controller
 public class UserController {
-//
+
     @Autowired
     private UserService userService;
-
-    @GetMapping("/start")
-    public String start() {
-        return "start";
-    }
 
     @GetMapping("/login")
     public String login(Principal principal, Model model) {
